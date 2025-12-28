@@ -7,6 +7,8 @@ DOCKERFILE_DIR=./Docker
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 XAUTH=/tmp/.docker.xauth
 
+
+
 # 自動抓主機的 UID / GID
 HOST_UID=$(id -u)
 HOST_GID=$(id -g)

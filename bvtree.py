@@ -71,6 +71,7 @@ class AggressivePolicy:
             # 若有外部指定的偏好，優先使用；否則隨機選一個
             self._focus_for_player[pid] = self.focus_action if (self.focus_action in actions) else random.choice(actions)
 
+        # 
         # 預測執行單一行為後是否會讓屬性為負
         def would_cause_negative(action_name: str):
             """模擬執行 action，一旦未經 clamp 的預測值會落到 < 0，視為不安全。
