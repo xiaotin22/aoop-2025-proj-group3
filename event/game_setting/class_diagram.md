@@ -17,6 +17,8 @@ classDiagram
         +end_scene()
         +rank_scene()
         +feedback_scene()
+        +diary_scene()
+        +advice_scene()
     }
 
     class AudioManager {
@@ -29,6 +31,10 @@ classDiagram
         +set_bgm_volume(vol)
         +set_sound_volume(vol)
         +is_sound_playing(path)
+        +play_sound_loop(path)
+        +stop_bgm()
+        +pause_bgm()
+        +resume_bgm()
     }
 
     class BaseScene {
@@ -36,48 +42,86 @@ classDiagram
         -running
         -clock
         -FPS
+        -SCREEN_WIDTH
+        -SCREEN_HEIGHT
+        -audio : AudioManager
         +handle_event(event)
         +update()
         +draw()
-        +run()
+        +run() async
     }
 
     class FirstScene {
-        +run()
+        +run() async
     }
     class StartScene {
-        +run()
+        +run() async
     }
     class CharacterSelectScene {
-        +run()
+        +run() async
     }
     class MainScene {
-        +run()
+        +run() async
     }
     class StoryScene {
-        +run()
+        +run() async
+        +update()
+        +draw()
     }
     class EventScene {
-        +run()
+        +run() async
     }
     class SetScene {
-        +run()
+        +run() async
     }
     class EndScene {
-        +run()
+        +run() async
     }
     class RankScene {
-        +run()
+        +run() async
     }
     class FeedbackScene {
-        +run()
+        +run() async
     }
     class SoundControlScene {
-        +run()
+        +run() async
+    }
+
+    class DiaryScene {
+        +run() async
+    }
+
+    class IntroScene {
+        +run() async
+    }
+
+    class LuckyWheelScene {
+        +run() async
+    }
+
+    class TakeTestScene {
+        +run() async
+    }
+
+    class GradingScene {
+        +run() async
+    }
+
+    class CharacterAnimator {
+        -folder_path
+        -position
+        -size
+        -frames
+        -current_frame
+        -frame_delay
+        +update()
+        +draw(screen)
+        +switch_animation(path)
     }
 
     class Character {
         -name
+        -chname
         -intelligence
         -mood
         -energy
@@ -88,6 +132,12 @@ classDiagram
         -week_number
         -total_score
         -GPA
+        -week_data
+        -event_history
+        -header
+        -testing
+        -taketest
+        -ending
         +study(degree)
         +socialize(degree)
         +play_game(degree)
@@ -113,6 +163,9 @@ classDiagram
     SceneManager --> RankScene
     SceneManager --> FeedbackScene
     SceneManager --> SoundControlScene
+    SceneManager --> DiaryScene
+    SceneManager --> IntroScene
+    SceneManager --> AdviceScene
 
     FirstScene --|> BaseScene
     StartScene --|> BaseScene
@@ -125,6 +178,11 @@ classDiagram
     RankScene --|> BaseScene
     FeedbackScene --|> BaseScene
     SoundControlScene --|> BaseScene
+    DiaryScene --|> BaseScene
+    IntroScene --|> BaseScene
+    LuckyWheelScene --|> BaseScene
+    TakeTestScene --|> BaseScene
+    GradingScene --|> BaseScene
 
     Character <|-- Bubu
     Character <|-- Yier
@@ -138,4 +196,14 @@ classDiagram
     EndScene o-- Character
     RankScene o-- Character
     FeedbackScene o-- Character
+    BaseScene o-- AudioManager
+    MainScene o-- CharacterAnimator
+    StoryScene o-- CharacterAnimator
+    EndScene o-- CharacterAnimator
+    TakeTestScene o-- CharacterAnimator
+    GradingScene o-- CharacterAnimator
+
+    StoryScene --> LuckyWheelScene
+    StoryScene --> TakeTestScene
+    TakeTestScene --> GradingScene
 ```
