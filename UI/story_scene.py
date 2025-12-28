@@ -152,13 +152,13 @@ class StoryScene(BaseScene):
         # 期中考
         if self.player.week_number == 8:
             taketest_scene = TakeTestScene(self.screen, self.player)
-            self.player.midterm = taketest_scene.run()
+            self.player.midterm = await taketest_scene.run()
 
 
         # 期末考
         if self.player.week_number == 16: 
             taketest_scene = TakeTestScene(self.screen, self.player)
-            self.player.final = taketest_scene.run()
+            self.player.final = await taketest_scene.run()
             options = ["幸運教授指數3", "幸運教授指數5", "幸運教授指數4"]
             lucky_scene = LuckyWheelScene(self.screen, options)
             result = lucky_scene.run()

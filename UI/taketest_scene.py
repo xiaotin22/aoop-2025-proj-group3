@@ -73,7 +73,7 @@ class TakeTestScene(BaseScene):
                         pygame.time.delay(500)  # 模擬考試過程
                         self.running = False
                         grade_scene = GradingScene(self.screen, self.player)
-                        result = grade_scene.run()
+                        result = await grade_scene.run()
                         self.running = False  # 確保當 GradingScene 結束後，這個場景也結束
                         return result
 
