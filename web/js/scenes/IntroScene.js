@@ -44,9 +44,10 @@ class IntroScene extends Phaser.Scene {
         }
         
         // 黑色漸進遮罩（確保是黑色 0x000000）
-        // Pygame: overlay_alpha 從 0 增加到 200（範圍 0-255）
+        // Pygame: overlay_alpha 從 0 增加到 200（範圍 0-255）= 0.78
         this.overlayAlpha = 0;
         this.overlayGraphics = this.add.graphics();
+        this.targetOverlayAlpha = 200 / 255; // 0.78
         
         // 動畫角色位置和大小
         // Pygame: CharacterAnimator(..., (900, 50), (240, 220))
