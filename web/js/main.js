@@ -26,6 +26,9 @@ const phaserConfig = {
         LuckyWheelScene,
         TakeTestScene,
         GradingScene,
+        SetScene,
+        SoundControlScene,
+        ConfirmScene,
         DiaryScene,
         RankScene,
         EndScene
