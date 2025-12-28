@@ -14,10 +14,13 @@ class StoryScene extends Phaser.Scene {
         
         const player = window.GameState.getPlayer();
         
-        // 背景
-        const graphics = this.add.graphics();
-        graphics.fillGradientStyle(0x667eea, 0x667eea, 0x764ba2, 0x764ba2, 1);
-        graphics.fillRect(0, 0, width, height);
+        // 背景 - 參照 story_scene.py: set_alpha(65)
+        if (this.textures.exists('background_intro')) {
+            const bg = this.add.image(width / 2, height / 2, 'background_intro');
+            const scale = Math.max(width / bg.width, height / bg.height);
+            bg.setScale(scale);
+            bg.setAlpha(65 / 255); // 0.255
+        }
         
         // 根據週數顯示不同劇情
         let storyText = '';
@@ -28,16 +31,15 @@ class StoryScene extends Phaser.Scene {
         } else if (player.weekNumber === 16) {
             storyText = `第 ${player.weekNumber} 週\n\n期末考試週來臨！\n\n這是最後的衝刺階段。\n你這一學期的努力即將得到回報。\n\n全力以赴吧！`;
         } else {
-            storyText = `第 ${player.weekNumber + 1} 週\n\n新的一週開始了。\n你感覺如何？\n\n繼續保持平衡，朝著目標前進！`;
-        }
-        
-        // 顯示劇情文字
-        const story = this.add.text(width / 2, height / 2 - 50, storyText, {
-            fontSize: '28px',
-            fill: '#FFFFFF',
+            story - 參照 story_scene.py: font 36, left_margin 100, top_start 230
+        const story = this.add.text(100, 230, storyText, {
+            fontSize: '36px', // 參照 font 36
+            fill: '#323232', // 參照 (50, 50, 50)
             fontFamily: 'Arial',
-            align: 'center',
-            lineSpacing: 15,
+            align: 'left',
+            lineSpacing: 10, // 參照 line_spacing
+            wordWrap: { width: 900 }
+        },
             wordWrap: { width: 900 }
         });
         story.setOrigin(0.5);
