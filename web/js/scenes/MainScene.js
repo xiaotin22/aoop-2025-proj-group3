@@ -320,7 +320,8 @@ class MainScene extends Phaser.Scene {
         
         this.settingsBtn.on('pointerdown', () => {
             // 進入設定場景
-            alert('設定功能開發中...');
+            this.scene.pause();
+            this.scene.launch('SetScene');
         });
     }
     
