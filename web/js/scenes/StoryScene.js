@@ -93,89 +93,58 @@ class StoryScene extends Phaser.Scene {
         
         // 增加週數
         player.nextWeek();
-        
-        // 根據週數決定下一個場景
-        if (player.weekNumber === 8 || player.weekNumber === 16) {
-            // 考試週
-            this.showExamScene();
-        } else if (player.weekNumber > 16) {
-            // 遊戲結束
-            this.scene.start('EndScene');
-        } else {
-            // 普通週，進入事件選擇
-            this.scene.start('EventScene');
-        }
-    }
-    
-    showExamScene() {
-        const player = window.GameState.getPlayer();
-        const width = this.cameras.main.width;
-        const height = this.cameras.main.height;
-        
-        // 清除當前內容
-        this.children.removeAll();
-        
-        // 背景
-        const graphics = this.add.graphics();
-        graphics.fillGradientStyle(0x667eea, 0x667eea, 0x764ba2, 0x764ba2, 1);
-        graphics.fillRect(0, 0, width, height);
-        
-        // 考試標題
-        const examTitle = this.add.text(width / 2, height / 2 - 150, 
-            player.weekNumber === 8 ? '期中考試' : '期末考試', 
-            GameUtils.createTextStyle(56, '#FFEB3B', 'Arial')
-        );
-        examTitle.setOrigin(0.5);
-        
-        // 計算成績
-        if (player.weekNumber === 8) {
-            player.getMidterm();
-            var score = player.midterm;
-            var scoreText = `期中考成績：${score} 分`;
-        } else {
-            player.getFinal();
-            var score = player.final;
-            var scoreText = `期末考成績：${score} 分`;
-        }
-        
-        const resultText = this.add.text(width / 2, height / 2, scoreText, 
-            GameUtils.createTextStyle(40, '#FFFFFF', 'Arial')
-        );
-        resultText.setOrigin(0.5);
-        resultText.setAlpha(0);
-        
-        // 動畫顯示成績
-        this.time.delayedCall(1000, () => {
-            this.tweens.add({
-                targets: resultText,
-                alpha: 1,
-                scale: { from: 0.5, to: 1 },
-                duration: 800,
-                ease: 'Back.easeOut'
+
+        // 週三：抽籤回家 / 期末教授抽籤
+        if (player.weekNumber === 3) {
+            const options = [
+                '超可愛學姐\n帥潮學長',
+                '看起來是系邊\n有點宅宅的學長',
+                '超搞笑的系核\n第一次見面\n就表演倒立走路',
+                '卷哥卷姐',
+                '被放生了'
+            ];
+            this.scene.start('LuckyWheelScene', {
+                title: '今天跟誰回家？',
+                options,
+                onResult: (result) => { player.home = result; },
+                nextScene: 'EventScene'
             });
-        });
-        
-        // 繼續按鈕
-        const continueButton = this.add.text(width / 2, height - 100, '繼續', 
-            GameUtils.createTextStyle(32, '#FFFFFF', 'Arial')
-        );
-        continueButton.setOrigin(0.5);
-        continueButton.setBackgroundColor('#4A90E2');
-        continueButton.setPadding(30, 15);
-        continueButton.setAlpha(0);
-        
-        this.time.delayedCall(2500, () => {
-            continueButton.setAlpha(1);
-            continueButton.setInteractive({ useHandCursor: true })
-                .on('pointerdown', () => {
-                    if (player.weekNumber === 16) {
-                        // 期末考後進入結束場景
-                        this.scene.start('EndScene');
-                    } else {
-                        // 期中考後繼續遊戲
-                        this.scene.start('MainScene');
-                    }
-                });
-        });
+            return;
+        }
+
+        // 考試週
+        if (player.weekNumber === 8) {
+            this.scene.start('TakeTestScene', {
+                examType: 'midterm',
+                nextScene: 'EventScene'
+            });
+            return;
+        }
+
+        if (player.weekNumber === 16) {
+            // 期末考後進教授抽籤，最後進結局
+            this.scene.start('TakeTestScene', {
+                examType: 'final',
+                nextScene: 'LuckyWheelScene',
+                nextSceneData: {
+                    title: '幸運教授指數',
+                    options: ['幸運教授指數3', '幸運教授指數5', '幸運教授指數4'],
+                    onResult: (result) => {
+                        const mapping = { '幸運教授指數3': 3, '幸運教授指數5': 5, '幸運教授指數4': 4 };
+                        player.luckyProf = mapping[result] || 3;
+                    },
+                    nextScene: 'EndScene'
+                }
+            });
+            return;
+        }
+
+        if (player.weekNumber > 16) {
+            this.scene.start('EndScene');
+            return;
+        }
+
+        // 普通週，進入事件選擇
+        this.scene.start('EventScene');
     }
 }
