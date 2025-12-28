@@ -16,18 +16,21 @@ class EndScene extends Phaser.Scene {
         // 計算最終 GPA
         const result = player.calculateGPA();
         
-        // 背景
-        const graphics = this.add.graphics();
-        graphics.fillGradientStyle(0x1A237E, 0x1A237E, 0x311B92, 0x311B92, 1);
-        graphics.fillRect(0, 0, width, height);
+        // 背景 - 參照 end_scene.py: set_alpha(100)
+        if (this.textures.exists('background_intro')) {
+            const bg = this.add.image(width / 2, height / 2, 'background_intro');
+            const scale = Math.max(width / bg.width, height / bg.height);
+            bg.setScale(scale);
+            bg.setAlpha(100 / 255); // 0.39
+        }
         
-        // 標題
+        // 標題 - 參照 end_scene.py: title_font 54
         const title = this.add.text(width / 2, 80, '🎓 學期結束', 
-            GameUtils.createTextStyle(56, '#FFD700', 'Arial')
-        );
-        title.setOrigin(0.5);
-        
-        // 角色名稱
+            GameUtils.createTextStyle(54, '#FFD700', 'Arial')
+        ); - 參照 end_scene.py: subtitle_font 48
+        const nameText = this.add.text(width / 2, 160, 
+            `${player.name} 的成績單`, 
+            GameUtils.createTextStyle(48
         const nameText = this.add.text(width / 2, 160, 
             `${player.name} 的成績單`, 
             GameUtils.createTextStyle(36, '#FFFFFF', 'Arial')
