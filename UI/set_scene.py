@@ -81,14 +81,14 @@ class SetScene(BaseScene):
                     elif self.button1.is_clicked(event):
                         from UI.sound_control_scene import SoundControlScene
                         sound_scene = SoundControlScene(self.screen)
-                        sound_scene.run()
+                        await sound_scene.run()
                         continue
                     elif self.button2.is_clicked(event):
                         from UI.confirm_reborn_scene import ConfirmScene
                         new_blurred_bg = fast_blur(self.screen.copy())
 
                         confirm = ConfirmScene(self.screen, new_blurred_bg, self.player)
-                        result = confirm.run()
+                        result = await confirm.run()
                         if result == "RESTART":
                             #print("[SetScene] 收到 RESTART,return 中")
                             return "RESTART"  # 回傳給外層 MainScene 處理跳轉邏輯
