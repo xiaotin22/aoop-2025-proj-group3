@@ -2,7 +2,6 @@
 
 ###  Lazy Me Today Too 今天的我也想耍廢😎 ——— 模擬人生大學版
 
-🎮 **[立即在線遊玩（Web版）](https://xiaotin22.github.io/aoop-2025-proj-group3/)**  
 📦 [桌面版執行檔下載](https://drive.google.com/drive/folders/1e8xFppjzU4zMVT06rckOlk794lzat7y4?usp=sharing)
 
 GIF 素材來源：\
