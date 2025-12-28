@@ -157,9 +157,15 @@ class EndScene extends Phaser.Scene {
     
     createButtons(width, height) {
         const buttonY = height - 100;
+        const spacing = 150;
+        
+        // 結果分析按鈕
+        this.createButton(width / 2 - spacing * 2, buttonY, '📊 結果分析', 0x9C27B0, () => {
+            this.scene.start('AdviceScene');
+        });
         
         // 查看排行榜按鈕
-        this.createButton(width / 2 - 220, buttonY, '🏆 排行榜', 0x2196F3, () => {
+        this.createButton(width / 2 - spacing, buttonY, '🏆 排行榜', 0x2196F3, () => {
             this.scene.start('RankScene');
         });
         
@@ -169,8 +175,13 @@ class EndScene extends Phaser.Scene {
             this.scene.start('CharacterSelectScene');
         });
         
+        // 回饋表單按鈕
+        this.createButton(width / 2 + spacing, buttonY, '📝 回饋', 0xFF5722, () => {
+            this.scene.start('FeedbackScene');
+        });
+        
         // 返回主選單按鈕
-        this.createButton(width / 2 + 220, buttonY, '🏠 主選單', 0xFF9800, () => {
+        this.createButton(width / 2 + spacing * 2, buttonY, '🏠 主選單', 0xFF9800, () => {
             window.GameState.reset();
             this.scene.start('FirstScene');
         });
