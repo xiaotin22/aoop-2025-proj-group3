@@ -31,6 +31,8 @@ const phaserConfig = {
         ConfirmScene,
         DiaryScene,
         RankScene,
+        AdviceScene,
+        FeedbackScene,
         EndScene
     ],
     physics: {
