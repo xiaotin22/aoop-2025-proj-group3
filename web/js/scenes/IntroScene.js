@@ -132,15 +132,16 @@ class IntroScene extends Phaser.Scene {
         
         // 更新黑色遮罩透明度
         // Pygame: if self.overlay_alpha < 200: self.overlay_alpha += 4
+        // 最大值 200/255 = 0.78
         if (this.overlayAlpha < 200) {
             this.overlayAlpha += 4;
         }
         
-        // 繪製黑色遮罩
+        // 繪製黑色遮罩 (確保是黑色 0x000000)
         const width = this.cameras.main.width;
         const height = this.cameras.main.height;
         this.overlayGraphics.clear();
-        this.overlayGraphics.fillStyle(0x000000, this.overlayAlpha / 255);
+        this.overlayGraphics.fillStyle(0x000000, this.overlayAlpha / 255); // max 0.78
         this.overlayGraphics.fillRect(0, 0, width, height);
         
         // 打字效果
