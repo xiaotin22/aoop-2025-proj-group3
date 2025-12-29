@@ -49,13 +49,13 @@ class EventScene extends Phaser.Scene {
         const descBg = this.add.rectangle(width / 2, 150, 900, 100, 0xFFFFFF);
         descBg.setStrokeStyle(3, 0x4CAF50);
         
-        // 事件描述文字
+        // 事件描述文字 - 參照 event_scene.py: font 24px, target_width 850
         const eventText = this.add.text(width / 2, 150, weekEvent.events.description || '', {
             fontSize: '24px',
-            fill: '#333333',
+            fill: '#323232', // 參照 (50, 50, 50)
             fontFamily: 'JasonHandwriting3, Arial',
             align: 'center',
-            wordWrap: { width: 850 }
+            wordWrap: { width: 850 } // 參照 Python target_width=850
         });
         eventText.setOrigin(0.5);
         
